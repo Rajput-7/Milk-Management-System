@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milk Management System</title>
+
+<style>
+:root{
+--p:#020617;--b:#2563eb;--g:#16a34a;--r:#dc2626;--bg:#f1f5f9;
+}
+
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Segoe UI,system-ui;
+background:linear-gradient(120deg,#e0f2fe,#f8fafc);
+}
+
+header{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:white;
+padding:1rem;
+text-align:center;
+font-size:1.3rem;
+}
+
+.container{max-width:1100px;margin:auto;padding:15px;padding-bottom:80px}
+
+.page{display:none;animation:fade .3s ease}
+.active{display:block}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:none}
+}
+
+h2{margin-top:0;color:#020617}
+
+/* 🔥 HOME GRID NEW UI */
+.home-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-top:18px;
+}
+
+@media(max-width:700px){
+.home-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+.home-btn{
+background:linear-gradient(135deg,#ffffff,#f1f5f9);
+border-radius:22px;
+padding:22px 10px;
+text-align:center;
+font-weight:800;
+font-size:1.05rem;
+box-shadow:0 10px 25px #0002;
+cursor:pointer;
+transition:.25s;
+}
+
+.home-btn:hover{
+transform:translateY(-4px) scale(1.04);
+box-shadow:0 18px 35px #0003;
+background:linear-gradient(135deg,#e0f2fe,#ffffff);
+}
+
+.cardBox{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
+}
+
+.card{
+background:white;
+border-radius:20px;
+padding:20px;
+text-align:center;
+font-size:1.2rem;
+font-weight:700;
+box-shadow:0 10px 25px #0002;
+}
+
+form,.box{
+background:white;
+border-radius:22px;
+padding:18px;
+box-shadow:0 10px 30px #0002;
+}
+
+label{font-weight:600}
+input,select{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #cbd5e1;
+margin-top:6px;margin-bottom:12px;
+font-size:1rem;
+}
+
+.btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+color:white;
+}
+
+.green{background:linear-gradient(135deg,#16a34a,#22c55e)}
+.red{background:linear-gradient(135deg,#dc2626,#ef4444)}
+.blue{background:linear-gradient(135deg,#2563eb,#38bdf8)}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+background:white;
+border-radius:16px;
+overflow:hidden;
+}
+
+th{
+background:#020617;color:white;padding:10px
+}
+td{
+padding:8px;border-bottom:1px solid #e5e7eb;text-align:center
+}
+tr:hover{background:#f1f5f9}
+
+.back-btn{
+margin-bottom:10px;
+background:#020617;
+color:white;
+padding:8px 14px;
+border-radius:12px;
+border:0;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>🥛 Milk Management System</header>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="page active">
+<h2>Dashboard</h2>
+
+<div class="cardBox">
+<div class="card">🐄 Cow Milk<br><span id="dc">0</span> Lt</div>
+<div class="card">🐃 Buffalo Milk<br><span id="db">0</span> Lt</div>
+</div>
+
+<!-- ✅ 7 BUTTON HOME GRID -->
+<div class="home-grid">
+<div class="home-btn" onclick="show('stock')">🥛 STOCK</div>
+<div class="home-btn" onclick="show('sales')">➕ SALES</div>
+<div class="home-btn" onclick="show('allreport')">📄 ALL CUSTOMERS REPORT</div>
+<div class="home-btn" onclick="show('custreport')">👥 CUSTOMER WISE REPORT</div>
+<div class="home-btn" onclick="show('addcust')">👤 ADD CUSTOMER</div>
+<div class="home-btn" onclick="show('recycle')">♻️ RECYCLE BIN</div>
+</div>
+</div>
+
+<!-- SALES -->
+<div id="sales" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>Add Sales</h2>
+<form id="salesForm">
+<label>Date</label><input type="date" id="sDate" required>
+<label>Customer</label><select id="sCust"></select>
+<label>Milk Type</label>
+<select id="sType"><option>Cow</option><option>Buffalo</option></select>
+<label>Quantity (Lt)</label><input type="number" step="0.1" id="sQty" required>
+<button class="btn green">Add Sales</button>
+</form>
+</div>
+
+<!-- STOCK -->
+<div id="stock" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>Add Stock</h2>
+<div class="box">
+<select id="stType"><option>Cow</option><option>Buffalo</option></select>
+<input type="number" step="0.1" id="stQty" placeholder="Enter Liter">
+<button onclick="addStock()" class="btn green">Update Stock</button>
+</div>
+</div>
+
+<!-- ALL REPORT -->
+<div id="allreport" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>All Customers Report</h2>
+<button onclick="exportExcel()" class="btn blue">Export Excel</button>
+<table id="allTable">
+<thead><tr><th>Date</th><th>Name</th><th>Type</th><th>Qty</th><th>Amount</th><th>Action</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+
+<!-- CUSTOMER REPORT -->
+<div id="custreport" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>Customer Wise Report</h2>
+<select id="repCust" onchange="custReport()"></select>
+<div id="sum" style="margin:10px;font-weight:bold"></div>
+<table>
+<thead><tr><th>Date</th><th>Qty</th><th>Amount</th></tr></thead>
+<tbody id="custTable"></tbody>
+</table>
+</div>
+
+<!-- ADD CUSTOMER -->
+<div id="addcust" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>Add Customer</h2>
+<div class="box">
+<input id="cName" placeholder="Name">
+<input id="cPhone" placeholder="Phone">
+<input type="number" id="cRate" placeholder="Rate per Lt">
+<button onclick="addCustomer()" class="btn green">Save Customer</button>
+</div>
+</div>
+
+<!-- RECYCLE -->
+<div id="recycle" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>Recycle Bin</h2>
+<table>
+<thead><tr><th>Name</th><th>Qty</th><th>Type</th><th>Restore</th></tr></thead>
+<tbody id="recTable"></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+let customers=JSON.parse(localStorage.getItem("cust"))||[];
+let sales=JSON.parse(localStorage.getItem("sales"))||[];
+let stock=JSON.parse(localStorage.getItem("stock"))||{Cow:0,Buffalo:0};
+let recycle=JSON.parse(localStorage.getItem("recycle"))||[];
+
+sDate.valueAsDate=new Date(); refresh();
+
+function show(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+refresh();
+}
+
+function refresh(){
+dc.innerText=stock.Cow.toFixed(1);
+db.innerText=stock.Buffalo.toFixed(1);
+sCust.innerHTML='<option value="">Select</option>';
+repCust.innerHTML='<option value="">Select</option>';
+customers.forEach(c=>{
+sCust.innerHTML+=`<option>${c.name}</option>`;
+repCust.innerHTML+=`<option>${c.name}</option>`;
+});
+loadAll(); loadRecycle();
+}
+
+function save(){
+localStorage.setItem("cust",JSON.stringify(customers));
+localStorage.setItem("sales",JSON.stringify(sales));
+localStorage.setItem("stock",JSON.stringify(stock));
+localStorage.setItem("recycle",JSON.stringify(recycle));
+}
+
+function addCustomer(){
+if(!cName.value||!cRate.value) return alert("Fill details");
+customers.push({name:cName.value,phone:cPhone.value,rate:+cRate.value});
+save(); alert("Customer Added"); cName.value=cPhone.value=cRate.value=""; refresh();
+}
+
+function addStock(){
+let q=+stQty.value; if(q<=0) return;
+stock[stType.value]+=q; save(); refresh(); alert("Stock Updated"); stQty.value="";
+}
+
+salesForm.onsubmit=e=>{
+e.preventDefault();
+if(!sCust.value) return alert("Select customer");
+let q=+sQty.value,t=sType.value;
+if(stock[t]<q) return alert("Not enough stock");
+let c=customers.find(x=>x.name==sCust.value);
+let amt=q*c.rate;
+sales.push({id:Date.now(),date:sDate.value,name:c.name,type:t,qty:q,amount:amt});
+stock[t]-=q; save(); refresh(); alert("Sales Added"); salesForm.reset(); sDate.valueAsDate=new Date();
+}
+
+function loadAll(){
+let tb=document.querySelector("#allTable tbody"); tb.innerHTML="";
+sales.forEach(s=>{
+tb.innerHTML+=`<tr>
+<td>${s.date}</td><td>${s.name}</td><td>${s.type}</td>
+<td>${s.qty}</td><td>₹ ${s.amount.toFixed(2)}</td>
+<td><button onclick="del(${s.id})" class="btn red">Delete</button></td></tr>`;
+});
+}
+
+function del(id){
+let i=sales.findIndex(x=>x.id==id);
+recycle.push(sales[i]);
+sales.splice(i,1); save(); refresh();
+}
+
+function loadRecycle(){
+let tb=recTable; tb.innerHTML="";
+recycle.forEach((r,i)=>{
+tb.innerHTML+=`<tr><td>${r.name}</td><td>${r.qty}</td><td>${r.type}</td>
+<td><button onclick="restore(${i})" class="btn green">Restore</button></td></tr>`;
+});
+}
+
+function restore(i){
+let r=recycle[i];
+stock[r.type]-=r.qty;
+sales.push(r); recycle.splice(i,1); save(); refresh();
+}
+
+function custReport(){
+let name=repCust.value; let tb=custTable; tb.innerHTML="";
+let tq=0,ta=0;
+sales.filter(s=>s.name==name).forEach(s=>{
+tq+=s.qty; ta+=s.amount;
+tb.innerHTML+=`<tr><td>${s.date}</td><td>${s.qty}</td><td>₹ ${s.amount.toFixed(2)}</td></tr>`;
+});
+sum.innerHTML=name?`Total: ${tq.toFixed(2)} Lt | ₹ ${ta.toFixed(2)}`:"";
+}
+
+function exportExcel(){
+let csv="Date,Name,Type,Qty,Amount\n";
+sales.forEach(s=>csv+=`${s.date},${s.name},${s.type},${s.qty},${s.amount}\n`);
+let a=document.createElement("a");
+a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+a.download="milk_report.csv"; a.click();
+}
+</script>
+
+</body>
+</html>
