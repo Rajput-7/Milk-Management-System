@@ -4,144 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milk Management System</title>
+<link rel="icon" type="image/x-icon" href="Milk.ico">
 
-  <link rel="icon" type="image/x-icon" href="Milk.ico">
-  
 <style>
-:root{
---p:#020617;--b:#2563eb;--g:#16a34a;--r:#dc2626;--bg:#f1f5f9;
-}
+:root{--p:#020617;--b:#2563eb;--g:#16a34a;--r:#dc2626;}
 
 *{box-sizing:border-box}
-body{
-margin:0;
-font-family:Segoe UI,system-ui;
-background:linear-gradient(120deg,#e0f2fe,#f8fafc);
-}
+body{margin:0;font-family:Segoe UI,system-ui;background:linear-gradient(120deg,#e0f2fe,#f8fafc);}
 
 header{
 background:linear-gradient(135deg,#020617,#0f172a);
-color:white;
-padding:1rem;
-text-align:center;
-font-size:1.3rem;
+color:white;padding:1.5rem;text-align:center;font-size:1.3rem;
 }
+.header-logo{width:60px;border-radius:50%;background:white;padding:5px;margin-bottom:10px}
 
 .container{max-width:1100px;margin:auto;padding:15px;padding-bottom:80px}
 
-.page{display:none;animation:fade .3s ease}
+.page{display:none;animation:slideFade .35s cubic-bezier(.4,0,.2,1)}
 .active{display:block}
 
-@keyframes fade{
-from{opacity:0;transform:translateY(10px)}
+@keyframes slideFade{
+from{opacity:0;transform:translateY(25px) scale(.97)}
 to{opacity:1;transform:none}
 }
 
-h2{margin-top:0;color:#020617}
-
-/* 🔥 HOME GRID NEW UI */
-.home-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
-margin-top:18px;
-}
-
-@media(max-width:700px){
-.home-grid{grid-template-columns:repeat(2,1fr);}
-}
+.home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+@media(max-width:700px){.home-grid{grid-template-columns:repeat(2,1fr)}}
 
 .home-btn{
-background:linear-gradient(135deg,#ffffff,#f1f5f9);
-border-radius:22px;
-padding:22px 10px;
-text-align:center;
-font-weight:800;
-font-size:1.05rem;
-box-shadow:0 10px 25px #0002;
-cursor:pointer;
-transition:.25s;
+background:linear-gradient(135deg,#fff,#f1f5f9);
+border-radius:22px;padding:22px 10px;text-align:center;
+font-weight:800;box-shadow:0 10px 25px #0002;
+cursor:pointer;transition:.25s cubic-bezier(.4,0,.2,1);
 }
-
 .home-btn:hover{
-transform:translateY(-4px) scale(1.04);
+transform:translateY(-6px) scale(1.02);
 box-shadow:0 18px 35px #0003;
-background:linear-gradient(135deg,#e0f2fe,#ffffff);
+background:linear-gradient(135deg,#e0f2fe,#fff);
 }
+.home-btn:active{transform:scale(.95)}
 
-.cardBox{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-bottom:15px;
-}
-
+.cardBox{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
 .card{
-background:white;
-border-radius:20px;
-padding:20px;
-text-align:center;
-font-size:1.2rem;
-font-weight:700;
-box-shadow:0 10px 25px #0002;
+background:white;border-radius:20px;padding:20px;text-align:center;
+font-weight:700;box-shadow:0 10px 25px #0002;
 }
 
-form,.box{
-background:white;
-border-radius:22px;
-padding:18px;
-box-shadow:0 10px 30px #0002;
-}
+form,.box{background:white;border-radius:22px;padding:18px;box-shadow:0 10px 30px #0002}
 
-label{font-weight:600}
 input,select{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:1px solid #cbd5e1;
-margin-top:6px;margin-bottom:12px;
-font-size:1rem;
+width:100%;padding:12px;border-radius:12px;
+border:1px solid #cbd5e1;margin:6px 0 12px
 }
+
+.btn-group{display:flex;gap:10px;margin-top:10px}
 
 .btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:14px;
-font-weight:700;
-cursor:pointer;
-color:white;
+width:100%;padding:12px;border:none;border-radius:14px;
+font-weight:700;cursor:pointer;color:white;
+transition:.2s;
 }
+.btn:active{transform:scale(.95)}
 
 .green{background:linear-gradient(135deg,#16a34a,#22c55e)}
 .red{background:linear-gradient(135deg,#dc2626,#ef4444)}
 .blue{background:linear-gradient(135deg,#2563eb,#38bdf8)}
+.gray{background:#64748b}
 
 table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-background:white;
-border-radius:16px;
-overflow:hidden;
+width:100%;border-collapse:collapse;margin-top:10px;
+background:white;border-radius:16px;overflow:hidden
 }
+th{background:#020617;color:white;padding:10px}
+td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:center}
 
-th{
-background:#020617;color:white;padding:10px
-}
-td{
-padding:8px;border-bottom:1px solid #e5e7eb;text-align:center
-}
-tr:hover{background:#f1f5f9}
+tr{animation:rowIn .35s ease}
+@keyframes rowIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1}}
 
 .back-btn{
-margin-bottom:10px;
-background:#020617;
-color:white;
-padding:8px 14px;
-border-radius:12px;
-border:0;
-cursor:pointer;
+margin-bottom:10px;background:#020617;color:white;
+padding:8px 14px;border-radius:12px;cursor:pointer;
+transition:.2s
+}
+.back-btn:active{transform:scale(.95)}
+
+.success{animation:pulse .4s}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+.shake{animation:shake .3s}
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-5px)}
+100%{transform:translateX(0)}
 }
 </style>
 </head>
@@ -150,24 +106,23 @@ cursor:pointer;
 
 <header>
   <img src="Milk.ico" alt="Logo" class="header-logo"><br>🥛 Milk Management System</header>
+<img src="Milk.ico" class="header-logo"><br>
+🥛 Milk Management System
+</header>
 
 <div class="container">
 
-<!-- HOME -->
 <div id="home" class="page active">
-<h2>Dashboard</h2>
-
 <div class="cardBox">
 <div class="card">🐄 Cow Milk<br><span id="dc">0</span> Lt</div>
 <div class="card">🐃 Buffalo Milk<br><span id="db">0</span> Lt</div>
 </div>
 
-<!-- ✅ 7 BUTTON HOME GRID -->
 <div class="home-grid">
 <div class="home-btn" onclick="show('stock')">🥛 STOCK</div>
 <div class="home-btn" onclick="show('sales')">➕ SALES</div>
-<div class="home-btn" onclick="show('allreport')">📄 ALL CUSTOMERS REPORT</div>
-<div class="home-btn" onclick="show('custreport')">👥 CUSTOMER WISE REPORT</div>
+<div class="home-btn" onclick="show('allreport')">📄 ALL REPORT</div>
+<div class="home-btn" onclick="show('custreport')">👥 CUSTOMER REPORT</div>
 <div class="home-btn" onclick="show('addcust')">👤 ADD CUSTOMER</div>
 <div class="home-btn" onclick="show('recycle')">♻️ RECYCLE BIN</div>
 </div>
@@ -176,33 +131,24 @@ cursor:pointer;
 <!-- SALES -->
 <div id="sales" class="page">
 <button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>Add Sales</h2>
-<form id="salesForm">
-<label>Date</label><input type="date" id="sDate" required>
+<h2>➕ SALES</h2>
+<form id="salesBox">
+<label>Date</label><input type="date" id="sDate">
 <label>Customer</label><select id="sCust"></select>
-<label>Milk Type</label>
-<select id="sType"><option>Cow</option><option>Buffalo</option></select>
-<label>Quantity (Lt)</label><input type="number" step="0.1" id="sQty" required>
-<button class="btn green">Add Sales</button>
+<label>Milk Type</label><select id="sType"><option>Cow</option><option>Buffalo</option></select>
+<label>Quantity (Lt)</label><input type="number" step="0.1" id="sQty">
+<div class="btn-group">
+<button type="button" onclick="handleSales('Morning')" class="btn green">🌅 Morning</button>
+<button type="button" onclick="handleSales('Evening')" class="btn blue">🌙 Evening</button>
+</div>
+<button type="button" onclick="clearSalesForm()" class="btn gray" style="margin-top:10px">Clear</button>
 </form>
-</div>
-
-<!-- STOCK -->
-<div id="stock" class="page">
-<button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>Add Stock</h2>
-<div class="box">
-<select id="stType"><option>Cow</option><option>Buffalo</option></select>
-<input type="number" step="0.1" id="stQty" placeholder="Enter Liter">
-<button onclick="addStock()" class="btn green">Update Stock</button>
-</div>
 </div>
 
 <!-- ALL REPORT -->
 <div id="allreport" class="page">
 <button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>All Customers Report</h2>
-<button onclick="exportExcel()" class="btn blue">Export Excel</button>
+<h2>📄 ALL REPORT</h2>
 <table id="allTable">
 <thead><tr><th>Date</th><th>Name</th><th>Type</th><th>Qty</th><th>Amount</th><th>Action</th></tr></thead>
 <tbody></tbody>
@@ -212,8 +158,9 @@ cursor:pointer;
 <!-- CUSTOMER REPORT -->
 <div id="custreport" class="page">
 <button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>Customer Wise Report</h2>
+<h2>👥 CUSTOMER REPORT</h2>
 <select id="repCust" onchange="custReport()"></select>
+<button onclick="saveCustPDF()" class="btn blue" style="margin:10px 0;">Save Selected Customer PDF</button>
 <div id="sum" style="margin:10px;font-weight:bold"></div>
 <table>
 <thead><tr><th>Date</th><th>Qty</th><th>Amount</th></tr></thead>
@@ -221,25 +168,42 @@ cursor:pointer;
 </table>
 </div>
 
-<!-- ADD CUSTOMER -->
-<div id="addcust" class="page">
-<button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>Add Customer</h2>
-<div class="box">
-<input id="cName" placeholder="Name">
-<input id="cPhone" placeholder="Phone">
-<input type="number" id="cRate" placeholder="Rate per Lt">
-<button onclick="addCustomer()" class="btn green">Save Customer</button>
-</div>
-</div>
-
 <!-- RECYCLE -->
 <div id="recycle" class="page">
 <button class="back-btn" onclick="show('home')">⬅ Back</button>
-<h2>Recycle Bin</h2>
+<h2>♻️ RECYCLE BIN</h2>
 <table>
-<thead><tr><th>Name</th><th>Qty</th><th>Type</th><th>Restore</th></tr></thead>
+<thead><tr><th>Name</th><th>Qty</th><th>Type</th><th>Action</th></tr></thead>
 <tbody id="recTable"></tbody>
+</table>
+</div>
+
+<!-- STOCK -->
+<div id="stock" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>🥛 STOCK</h2>
+<div class="box">
+<select id="stType"><option>Cow</option><option>Buffalo</option></select>
+<input type="number" id="stQty" placeholder="Liters">
+<button onclick="addStock()" class="btn green">Update</button>
+</div>
+</div>
+
+<!-- ADD CUSTOMERS -->
+<div id="addcust" class="page">
+<button class="back-btn" onclick="show('home')">⬅ Back</button>
+<h2>👤 ADD CUSTOMERS</h2>
+
+<div class="box">
+<input id="cName" placeholder="Name">
+<input id="cRate" placeholder="Rate">
+<button onclick="addCustomer()" class="btn green">Save</button>
+</div>
+
+<h3>Customer List</h3>
+<table>
+<thead><tr><th>Name</th><th>Rate</th><th>Action</th></tr></thead>
+<tbody id="custList"></tbody>
 </table>
 </div>
 
@@ -259,16 +223,14 @@ document.getElementById(id).classList.add("active");
 refresh();
 }
 
-function refresh(){
-dc.innerText=stock.Cow.toFixed(1);
-db.innerText=stock.Buffalo.toFixed(1);
-sCust.innerHTML='<option value="">Select</option>';
-repCust.innerHTML='<option value="">Select</option>';
-customers.forEach(c=>{
-sCust.innerHTML+=`<option>${c.name}</option>`;
-repCust.innerHTML+=`<option>${c.name}</option>`;
-});
-loadAll(); loadRecycle();
+function animateValue(el,start,end,duration=400){
+let range=end-start,startTime=performance.now();
+function step(now){
+let p=Math.min((now-startTime)/duration,1);
+el.innerText=(start+range*p).toFixed(1);
+if(p<1)requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
 }
 
 function save(){
@@ -278,26 +240,32 @@ localStorage.setItem("stock",JSON.stringify(stock));
 localStorage.setItem("recycle",JSON.stringify(recycle));
 }
 
-function addCustomer(){
-if(!cName.value||!cRate.value) return alert("Fill details");
-customers.push({name:cName.value,phone:cPhone.value,rate:+cRate.value});
-save(); alert("Customer Added"); cName.value=cPhone.value=cRate.value=""; refresh();
+function refresh(){
+animateValue(dc,Number(dc.innerText)||0,stock.Cow);
+animateValue(db,Number(db.innerText)||0,stock.Buffalo);
+
+sCust.innerHTML=repCust.innerHTML='<option value="">Select Customer</option>';
+customers.forEach(c=>{
+sCust.innerHTML+=`<option>${c.name}</option>`;
+repCust.innerHTML+=`<option>${c.name}</option>`;
+});
+loadAll(); loadRecycle(); loadCustomers();
 }
 
-function addStock(){
-let q=+stQty.value; if(q<=0) return;
-stock[stType.value]+=q; save(); refresh(); alert("Stock Updated"); stQty.value="";
+function clearSalesForm(){
+sQty.value=""; sCust.value=""; sType.value="Cow"; sDate.valueAsDate=new Date();
 }
 
-salesForm.onsubmit=e=>{
-e.preventDefault();
-if(!sCust.value) return alert("Select customer");
-let q=+sQty.value,t=sType.value;
-if(stock[t]<q) return alert("Not enough stock");
-let c=customers.find(x=>x.name==sCust.value);
-let amt=q*c.rate;
-sales.push({id:Date.now(),date:sDate.value,name:c.name,type:t,qty:q,amount:amt});
-stock[t]-=q; save(); refresh(); alert("Sales Added"); salesForm.reset(); sDate.valueAsDate=new Date();
+function handleSales(shift){
+let q=+sQty.value,t=sType.value,cName=sCust.value;
+if(!cName||q<=0)return alert("Details missing");
+if(stock[t]<q){salesBox.classList.add("shake");setTimeout(()=>salesBox.classList.remove("shake"),300);return;}
+let c=customers.find(x=>x.name==cName);
+let time=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+let d=sDate.value.split('-').reverse().join('-')+" "+time+" ("+shift+")";
+sales.push({id:Date.now(),date:d,name:c.name,type:t,qty:q,amount:q*c.rate});
+stock[t]-=q; save(); refresh();
+salesBox.classList.add("success"); setTimeout(()=>salesBox.classList.remove("success"),400);
 }
 
 function loadAll(){
@@ -305,49 +273,94 @@ let tb=document.querySelector("#allTable tbody"); tb.innerHTML="";
 sales.forEach(s=>{
 tb.innerHTML+=`<tr>
 <td>${s.date}</td><td>${s.name}</td><td>${s.type}</td>
-<td>${s.qty}</td><td>₹ ${s.amount.toFixed(2)}</td>
-<td><button onclick="del(${s.id})" class="btn red">Delete</button></td></tr>`;
+<td>${s.qty}</td><td>₹${s.amount}</td>
+<td>
+<button onclick="editSale(${s.id})" class="btn blue" style="padding:5px">Edit</button>
+<button onclick="del(${s.id})" class="btn red" style="padding:5px">Delete</button>
+</td></tr>`;
 });
+}
+
+function editSale(id){
+let i=sales.findIndex(x=>x.id==id),s=sales[i];
+let newQty=prompt("New Quantity",s.qty);
+if(newQty&&newQty>0){
+stock[s.type]+=s.qty;
+if(stock[s.type]<newQty)return alert("Not enough stock");
+stock[s.type]-=newQty;
+s.qty=+newQty;
+let c=customers.find(x=>x.name==s.name);
+s.amount=s.qty*c.rate; save(); refresh();
+}
 }
 
 function del(id){
 let i=sales.findIndex(x=>x.id==id);
-recycle.push(sales[i]);
-sales.splice(i,1); save(); refresh();
+stock[sales[i].type]+=sales[i].qty;
+recycle.push(sales[i]); sales.splice(i,1);
+save(); refresh();
 }
 
 function loadRecycle(){
-let tb=recTable; tb.innerHTML="";
+recTable.innerHTML="";
 recycle.forEach((r,i)=>{
-tb.innerHTML+=`<tr><td>${r.name}</td><td>${r.qty}</td><td>${r.type}</td>
-<td><button onclick="restore(${i})" class="btn green">Restore</button></td></tr>`;
+recTable.innerHTML+=`<tr>
+<td>${r.name}</td><td>${r.qty}</td><td>${r.type}</td>
+<td>
+<button onclick="restore(${i})" class="btn green" style="padding:5px">Restore</button>
+<button onclick="permDel(${i})" class="btn red" style="padding:5px">X</button>
+</td></tr>`;
 });
 }
 
 function restore(i){
 let r=recycle[i];
-stock[r.type]-=r.qty;
-sales.push(r); recycle.splice(i,1); save(); refresh();
+if(stock[r.type]<r.qty)return alert("Not enough stock");
+stock[r.type]-=r.qty; sales.push(r); recycle.splice(i,1);
+save(); refresh();
 }
+function permDel(i){if(confirm("Delete permanently?")){recycle.splice(i,1);save();refresh();}}
+
+function addStock(){stock[stType.value]+=+stQty.value;save();refresh();stQty.value="";}
+function addCustomer(){customers.push({name:cName.value,rate:+cRate.value});save();refresh();cName.value=cRate.value="";}
+
+function loadCustomers(){
+custList.innerHTML="";
+customers.forEach((c,i)=>{
+custList.innerHTML+=`<tr>
+<td>${c.name}</td><td>₹${c.rate}</td>
+<td>
+<button onclick="editCust(${i})" class="btn blue" style="padding:5px">Edit</button>
+<button onclick="delCust(${i})" class="btn red" style="padding:5px">Delete</button>
+</td></tr>`;
+});
+}
+
+function editCust(i){
+let n=prompt("Name",customers[i].name);
+let r=prompt("Rate",customers[i].rate);
+if(n&&r){customers[i].name=n;customers[i].rate=+r;save();refresh();}
+}
+function delCust(i){if(confirm("Delete customer?")){customers.splice(i,1);save();refresh();}}
 
 function custReport(){
-let name=repCust.value; let tb=custTable; tb.innerHTML="";
-let tq=0,ta=0;
+let name=repCust.value; custTable.innerHTML=""; let tq=0,ta=0;
 sales.filter(s=>s.name==name).forEach(s=>{
 tq+=s.qty; ta+=s.amount;
-tb.innerHTML+=`<tr><td>${s.date}</td><td>${s.qty}</td><td>₹ ${s.amount.toFixed(2)}</td></tr>`;
+custTable.innerHTML+=`<tr><td>${s.date}</td><td>${s.qty}</td><td>₹${s.amount}</td></tr>`;
 });
-sum.innerHTML=name?`Total: ${tq.toFixed(2)} Lt | ₹ ${ta.toFixed(2)}`:"";
+sum.innerHTML=name?`Total: ${tq.toFixed(2)} Lt | ₹${ta.toFixed(2)}`:"";
 }
 
-function exportExcel(){
-let csv="Date,Name,Type,Qty,Amount\n";
-sales.forEach(s=>csv+=`${s.date},${s.name},${s.type},${s.qty},${s.amount}\n`);
-let a=document.createElement("a");
-a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
-a.download="milk_report.csv"; a.click();
+function saveCustPDF(){
+if(!repCust.value) return alert("Select customer first");
+let original=document.body.innerHTML;
+let report=document.getElementById("custreport").innerHTML;
+document.body.innerHTML="<h2>Customer Report</h2>"+report;
+window.print();
+document.body.innerHTML=original;
+location.reload();
 }
 </script>
-
 </body>
 </html>
